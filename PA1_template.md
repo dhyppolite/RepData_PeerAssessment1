@@ -1,23 +1,15 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 
 
 ## Loading and preprocessing the data
-```{r include=FALSE}
-require(dplyr)
-require(ggplot2)
 
-```
 
 
 The "is_nas" parameter of the function allows us to filter NA step observations from the data.
-```{r}
+
+```r
 load_data <- function(is_nas = FALSE)
 {
     if(is_nas)
@@ -30,13 +22,13 @@ load_data <- function(is_nas = FALSE)
         activity_data[!is.na(activity_data$steps), ]
     }
 }
-
 ```
 
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 total_activity <- function()
 {
     
@@ -59,13 +51,16 @@ total_activity <- function()
 }
 ```
 
-```{r echo=FALSE}
-total_activity()
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```
+## Mean =  10766.19 
+## Median =  10765
 ```
 
 ## What is the average daily activity pattern?
-```{r}
 
+```r
 average_activity <- function()
 {
     activity_data <- load_data()
@@ -83,13 +78,16 @@ average_activity <- function()
 }
 ```
 
-```{r echo=FALSE}
-average_activity()
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+```
+## Interval with the maximum number of steps across all days =  835
 ```
 
 
 ## Imputing missing values
-```{r}
+
+```r
 create_mean_interval_data <- function()
 {
     activity_data <- load_data()
@@ -145,9 +143,20 @@ missing_data <- function()
 }
 ```
 
-```{r echo=FALSE}
-missing_data()
+
 ```
+## Total Missing Steps =  2304 
+## [1] "Using the mean for the 5-minute interval as a replacement for NA values."
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+```
+## Mean total steps by Date =  10766.19 
+## Median total steps by Date= 10766.19
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
 
 The mean and median are very close to that of the original values in which the NAs were removed.  In this particular case, it seems as though imputing data had a negligible effect on the mean and median.  However, it did have an effect on the total number of steps reported by the histogram.  It rose the total number of steps taken overall.
 

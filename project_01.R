@@ -1,25 +1,11 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
-
-
-
-
-## Loading and preprocessing the data
-```{r include=FALSE}
 require(dplyr)
 require(ggplot2)
 
-```
-
-
-The "is_nas" parameter of the function allows us to filter NA step observations from the data.
-```{r}
+## Loading and preprocessing the data
 load_data <- function(is_nas = FALSE)
 {
+    ## 1.Load Data 2. Process/transform the data (if necessary) into a format suitable for your analysis
+    
     if(is_nas)
     {
         activity_data <- read.csv("activity.csv", header=TRUE)
@@ -31,12 +17,6 @@ load_data <- function(is_nas = FALSE)
     }
 }
 
-```
-
-
-## What is mean total number of steps taken per day?
-
-```{r}
 total_activity <- function()
 {
     
@@ -57,14 +37,6 @@ total_activity <- function()
     cat("Median = ",median(total_steps_by_date$total_steps), "\n")
     
 }
-```
-
-```{r echo=FALSE}
-total_activity()
-```
-
-## What is the average daily activity pattern?
-```{r}
 
 average_activity <- function()
 {
@@ -81,15 +53,7 @@ average_activity <- function()
     max_steps <- mean_interval[mean_interval$mean_steps == max(mean_interval$mean_steps),]$interval
     cat("Interval with the maximum number of steps across all days = ", max_steps,"\n")
 }
-```
 
-```{r echo=FALSE}
-average_activity()
-```
-
-
-## Imputing missing values
-```{r}
 create_mean_interval_data <- function()
 {
     activity_data <- load_data()
@@ -143,14 +107,3 @@ missing_data <- function()
    
    qplot(interval, y = mean_steps, data=mean_data, facets = .~weekends,xlab="Interval",  ylab = "Number of Steps", geom="line")
 }
-```
-
-```{r echo=FALSE}
-missing_data()
-```
-
-The mean and median are very close to that of the original values in which the NAs were removed.  In this particular case, it seems as though imputing data had a negligible effect on the mean and median.  However, it did have an effect on the total number of steps reported by the histogram.  It rose the total number of steps taken overall.
-
-## Are there differences in activity patterns between weekdays and weekends?
-
-During both weekdays and weekends, there is a brief spike in activity early in the day and a lull towards the end of the day. However, the weekend seems to have a has a higher average of sustained activity.
